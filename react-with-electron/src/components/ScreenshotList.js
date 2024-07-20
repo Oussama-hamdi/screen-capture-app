@@ -4,6 +4,7 @@ import "./ScreenshotList.css";
 
 const ScreenshotList = ({ userId }) => {
   const [screenshots, setScreenshots] = useState([]);
+  const [selectedImage, setSelectedImage] = useState(null);
 
   useEffect(() => {
     if (!userId) {
@@ -39,17 +40,29 @@ const ScreenshotList = ({ userId }) => {
     };
   }, [userId]);
 
+  const openModal = (image) => {
+    setSelectedImage(image);
+  };
+
+  const closeModal = () => {
+    setSelectedImage(null);
+  };
+
   return (
     <div>
       <h2 className="screenshots-title">Your Screenshots</h2>
       {screenshots.length > 0 ? (
         <div className="screenshots-container">
           {screenshots.map((screenshot, index) => (
-            <div className="screenshot" key={index}>
+            <div
+              className="screenshot"
+              key={index}
+              onClick={() => openModal(screenshot.image)}
+            >
               <img
                 src={`data:image/png;base64,${screenshot.image}`}
                 alt={`Screenshot ${index + 1}`}
-                style={{ maxWidth: "100%", maxHeight: "400px" }}
+                className="screenshot-img"
               />
               <p>
                 Timestamp: {new Date(screenshot.timestamp).toLocaleString()}
@@ -59,6 +72,21 @@ const ScreenshotList = ({ userId }) => {
         </div>
       ) : (
         <p>No screenshots found.</p>
+      )}
+
+      {selectedImage && (
+        <div className="modal">
+          <div className="modal-content">
+            <span className="close" onClick={closeModal}>
+              &times;
+            </span>
+            <img
+              src={`data:image/png;base64,${selectedImage}`}
+              alt="Enlarged Screenshot"
+              className="modal-img"
+            />
+          </div>
+        </div>
       )}
     </div>
   );
