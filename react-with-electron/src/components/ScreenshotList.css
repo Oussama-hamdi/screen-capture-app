@@ -62,7 +62,7 @@
   border: 1px solid #888;
   border-radius: 4px;
   width: 80%;
-  max-width: 800px;
+  max-width: 500px;
   position: relative;
 }
 
@@ -75,7 +75,7 @@
 .close {
   color: red;
   float: right;
-  font-size: 48px;
+  font-size: 38px;
   font-weight: bold;
   cursor: pointer;
 }

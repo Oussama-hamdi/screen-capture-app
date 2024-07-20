@@ -4,17 +4,17 @@ const mongoose = require("mongoose");
 const screenshotSchema = new mongoose.Schema({
   userId: {
     type: String,
-    required: true,
+    required: true, // The userId field is required
   },
   screenshots: [
     {
       image: {
         type: String,
-        required: true,
+        required: true, // The image field is required
       },
       timestamp: {
         type: Date,
-        default: Date.now,
+        default: Date.now, // Default to the current date and time
       },
     },
   ],
