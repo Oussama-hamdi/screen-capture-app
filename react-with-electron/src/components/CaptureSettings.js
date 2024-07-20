@@ -1,7 +1,13 @@
 import React, { useState } from "react";
-import "./CaptureSettings.css"; // Import a CSS file for styling
+import "./CaptureSettings.css";
 
-const CaptureSettings = ({ interval, setInterval, userId, setUserId }) => {
+const CaptureSettings = ({
+  interval,
+  setInterval,
+  userId,
+  setUserId,
+  setIsCapturing,
+}) => {
   const [error, setError] = useState("");
 
   const handleIntervalChange = (e) => {
@@ -16,6 +22,7 @@ const CaptureSettings = ({ interval, setInterval, userId, setUserId }) => {
       return;
     }
     setError("");
+    setIsCapturing(true);
     window.electronAPI?.updateConfig({ interval, userId });
   };
 

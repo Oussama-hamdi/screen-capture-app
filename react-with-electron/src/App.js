@@ -25,6 +25,7 @@ const App = () => {
     setIsCapturing(true);
     window.electronAPI.updateConfig({ interval, userId });
   };
+
   const handleStopCapturing = () => {
     setIsCapturing(false);
     window.electronAPI.stopCapturing();
@@ -38,13 +39,24 @@ const App = () => {
         setInterval={setInterval}
         userId={userId}
         setUserId={setUserId}
+        setIsCapturing={setIsCapturing}
       />
-      <button onClick={handleStartCapturing} disabled={isCapturing}>
-        Start Taking Screenshots
-      </button>
-      <button onClick={handleStopCapturing} disabled={!isCapturing}>
-        Stop Taking Screenshots
-      </button>
+      <div className="button-container">
+        <button
+          onClick={handleStartCapturing}
+          disabled={isCapturing}
+          className="action-button"
+        >
+          Start Taking Screenshots
+        </button>
+        <button
+          onClick={handleStopCapturing}
+          disabled={!isCapturing}
+          className="action-button"
+        >
+          Stop Taking Screenshots
+        </button>
+      </div>
       <ScreenshotList userId={userId} />
     </div>
   );
