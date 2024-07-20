@@ -5,10 +5,13 @@ const axios = require("axios");
 let mainWindow;
 let screenshotInterval = null;
 
+/**
+ * Create the main application window.
+ */
 const createMainWindow = () => {
   mainWindow = new BrowserWindow({
-    width: 600,
-    height: 300,
+    width: 1920,
+    height: 1080,
     webPreferences: {
       preload: path.join(__dirname, "preload.js"),
       contextIsolation: true,
@@ -19,7 +22,8 @@ const createMainWindow = () => {
 
   // Load the React app
   mainWindow.loadURL("http://localhost:3000");
-  // To open DevTools programmatically in the main window
+
+  // Uncomment to open DevTools programmatically in the main window
   // mainWindow.webContents.openDevTools();
 
   mainWindow.on("closed", () => {
@@ -27,13 +31,19 @@ const createMainWindow = () => {
   });
 };
 
+/**
+ * Initialize the Electron app when ready.
+ */
 app.whenReady().then(() => {
   createMainWindow();
 
+  /**
+   * Handle taking a screenshot.
+   */
   ipcMain.handle("take-screenshot", async (event, userId) => {
     try {
       const sources = await desktopCapturer.getSources({ types: ["screen"] });
-      let suitableSource = sources.find(
+      const suitableSource = sources.find(
         (source) => source.name === "Entire screen"
       );
 
@@ -51,6 +61,9 @@ app.whenReady().then(() => {
     }
   });
 
+  /**
+   * Handle updating the configuration for screenshot capturing.
+   */
   ipcMain.on("update-config", (event, config) => {
     console.log("Received config:", config);
 
@@ -61,7 +74,7 @@ app.whenReady().then(() => {
           const sources = await desktopCapturer.getSources({
             types: ["screen"],
           });
-          let suitableSource = sources.find(
+          const suitableSource = sources.find(
             (source) => source.name === "Entire screen"
           );
 
@@ -81,6 +94,9 @@ app.whenReady().then(() => {
     }
   });
 
+  /**
+   * Handle stopping the screenshot capturing.
+   */
   ipcMain.on("stop-capturing", () => {
     console.log("Stopping capturing...");
     clearInterval(screenshotInterval);
@@ -88,6 +104,9 @@ app.whenReady().then(() => {
   });
 });
 
+/**
+ * Quit the app when all windows are closed.
+ */
 app.on("window-all-closed", () => {
   if (mainWindow) mainWindow.close();
   app.quit();

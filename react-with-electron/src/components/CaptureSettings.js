@@ -11,7 +11,6 @@ const CaptureSettings = ({
   const [error, setError] = useState("");
 
   const handleIntervalChange = (e) => {
-    // Allow empty input and handle valid number values
     const value = e.target.value;
     setInterval(value === "" ? "" : Number(value));
   };

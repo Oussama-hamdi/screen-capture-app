@@ -22,8 +22,11 @@
   color: #fff;
   max-width: 100%;
   box-sizing: border-box;
-  cursor: pointer;
   transition: transform 0.2s ease;
+}
+
+.screenshot img {
+  cursor: pointer;
 }
 
 .screenshot:hover {
@@ -69,6 +72,8 @@
 .modal-img {
   width: 100%;
   height: auto;
+  max-height: 80vh;
+  object-fit: contain;
   border-radius: 4px;
 }
 
